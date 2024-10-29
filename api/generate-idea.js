@@ -10,12 +10,12 @@ export default async function handler(req) {
         );
     }
 
-    const apiKey = process.env.OPEN_AI_TOKEN;
-    if (!apiKey) {
-        return new Response(
-            JSON.stringify({ error: 'OpenAI API key not configured' }), 
-            { status: 500, headers: { 'Content-Type': 'application/json' } }
-        );
+    const { topic = 'any' } = await req.json();
+    
+    let prompt = "Generate one random, interesting idea that could be a project, business, or creative endeavor. Keep it concise, about 1-2 sentences. Make it practical and actionable.";
+    
+    if (topic !== 'any') {
+        prompt += ` The idea should be related to ${topic}.`;
     }
 
     try {
@@ -23,14 +23,14 @@ export default async function handler(req) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`
+                'Authorization': `Bearer ${process.env.OPEN_AI_TOKEN}`
             },
             body: JSON.stringify({
                 model: "gpt-3.5-turbo",
                 messages: [
                     {
                         role: "system",
-                        content: "You are a creative idea generator. Generate one random, interesting idea that could be a project, business, or creative endeavor. Keep it concise, about 1-2 sentences. Make it practical and actionable."
+                        content: prompt
                     },
                     {
                         role: "user",

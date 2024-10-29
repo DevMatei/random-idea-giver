@@ -5,8 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
     const historyList = document.getElementById('idea-history');
     const newChatBtn = document.getElementById('new-chat');
+    const topicSelect = document.getElementById('topic-select');
     
-    let ideaHistory = [];
+    let ideaHistory = JSON.parse(localStorage.getItem('ideaHistory')) || [];
 
     // Theme handling
     function toggleTheme() {
@@ -46,16 +47,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function generateIdea() {
         try {
-            // Update UI state
             generateBtn.disabled = true;
             spinner.style.display = 'inline-block';
             generateBtn.querySelector('.btn-text').textContent = 'Generating...';
 
+            const topic = topicSelect.value;
             const response = await fetch('/api/generate-idea', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                }
+                },
+                body: JSON.stringify({ topic })
             });
 
             if (!response.ok) {
@@ -68,8 +70,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(data.error);
             }
 
+            // Clear welcome message if it exists
+            if (messages.querySelector('.welcome-message')) {
+                messages.innerHTML = '';
+            }
+
             // Add to history and UI
             ideaHistory.push(data.idea);
+            if (ideaHistory.length > 10) {
+                ideaHistory.shift(); // Keep only last 10 ideas
+            }
             localStorage.setItem('ideaHistory', JSON.stringify(ideaHistory));
             addMessageToUI(data.idea);
             updateHistory();
@@ -78,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error:', error);
             addMessageToUI('Sorry, failed to generate an idea. Please try again.', false);
         } finally {
-            // Reset UI state
             generateBtn.disabled = false;
             spinner.style.display = 'none';
             generateBtn.querySelector('.btn-text').textContent = 'Generate Idea';
@@ -96,22 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (newChatBtn) {
-        newChatBtn.addEventListener('click', () => {
-            messages.innerHTML = '';
-            const welcomeDiv = document.createElement('div');
-            welcomeDiv.className = 'welcome-message';
-            welcomeDiv.innerHTML = `
-                <h2>Welcome to IdeaGPT</h2>
-                <p>Your AI-powered idea generator. Click "Generate" to get started!</p>
-            `;
-            messages.appendChild(welcomeDiv);
-        });
+        newChatBtn.addEventListener('click', clearMessages);
     }
 
-    // Load history from localStorage
-    const savedHistory = localStorage.getItem('ideaHistory');
-    if (savedHistory) {
-        ideaHistory = JSON.parse(savedHistory);
-        updateHistory();
-    }
+    // Initialize
+    updateHistory();
+    clearMessages();
 });

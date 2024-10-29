@@ -470,3 +470,26 @@ body {
 .contact-link:nth-child(2) { animation-delay: 0.1s; }
 .contact-link:nth-child(3) { animation-delay: 0.2s; }
 .contact-link:nth-child(4) { animation-delay: 0.3s; }
+
+.topic-select {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 200px;
+}
+
+.topic-select:hover {
+    border-color: var(--primary-color);
+}
+
+.input-wrapper {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
