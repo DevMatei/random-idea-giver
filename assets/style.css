@@ -493,3 +493,27 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+/* Logo theme switching */
+.logo-dark {
+    display: none;
+}
+
+.logo-light {
+    display: block;
+}
+
+[data-theme="dark"] .logo-dark {
+    display: block;
+}
+
+[data-theme="dark"] .logo-light {
+    display: none;
+}
+
+/* Update existing logo styles */
+.logo {
+    width: 32px;
+    height: 32px;
+    transition: transform 0.2s ease;
+}
