@@ -39,13 +39,14 @@ export default async function handler(req) {
                 ],
                 temperature: 0.8,
                 max_tokens: 100,
-                presence_penalty: 0.6,  // Encourage more diverse responses
-                frequency_penalty: 0.5  // Reduce repetition
+                presence_penalty: 0.6,
+                frequency_penalty: 0.5
             })
         });
 
         if (!response.ok) {
-            throw new Error(`OpenAI API error: ${response.status}`);
+            const error = await response.text();
+            throw new Error(`OpenAI API error: ${error}`);
         }
 
         const data = await response.json();

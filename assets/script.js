@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const newChatBtn = document.getElementById('new-chat');
     
     let ideaHistory = [];
-    let currentIndex = -1;
 
     // Theme handling
     function toggleTheme() {
@@ -17,17 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('theme', isDark ? 'light' : 'dark');
     }
 
-    // Initialize theme
     function initializeTheme() {
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.body.setAttribute('data-theme', savedTheme);
         themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-    }
-
-    // Add theme toggle event listener
-    if (themeToggle) {
-        themeToggle.addEventListener('click', toggleTheme);
-        initializeTheme();
     }
 
     function addMessageToUI(text, isAI = true) {
@@ -40,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateHistory() {
         historyList.innerHTML = '';
-        ideaHistory.slice().reverse().forEach((idea, index) => {
+        ideaHistory.slice().reverse().forEach((idea) => {
             const historyItem = document.createElement('div');
             historyItem.className = 'history-item';
             historyItem.textContent = idea.substring(0, 30) + '...';
@@ -72,68 +64,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = await response.json();
             
-            // Add to history
-            ideaHistory.push(data.idea);
-            currentIndex = ideaHistory.length - 1;
-            
-            // Save to localStorage
-            localStorage.setItem('ideaHistory', JSON.stringify(ideaHistory));
+            if (data.error) {
+                throw new Error(data.error);
+            }
 
-            // Display with animation
-            displayIdea(data.idea);
+            // Add to history and UI
+            ideaHistory.push(data.idea);
+            localStorage.setItem('ideaHistory', JSON.stringify(ideaHistory));
+            addMessageToUI(data.idea);
+            updateHistory();
+
         } catch (error) {
             console.error('Error:', error);
-            displayError('Sorry, failed to generate an idea. Please try again.');
+            addMessageToUI('Sorry, failed to generate an idea. Please try again.', false);
         } finally {
-            spinner.style.display = 'none';
-            ideaText.style.display = 'block';
+            // Reset UI state
             generateBtn.disabled = false;
+            spinner.style.display = 'none';
+            generateBtn.querySelector('.btn-text').textContent = 'Generate Idea';
         }
     }
 
-    function displayIdea(text) {
-        ideaText.classList.remove('fade-in');
-        // Trigger reflow
-        void ideaText.offsetWidth;
-        ideaText.textContent = text;
-        ideaText.classList.add('fade-in');
+    // Event Listeners
+    if (generateBtn) {
+        generateBtn.addEventListener('click', generateIdea);
+    }
+    
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+        initializeTheme();
     }
 
-    function displayError(message) {
-        ideaText.style.color = '#e74c3c';
-        ideaText.textContent = message;
-        setTimeout(() => {
-            ideaText.style.color = '#555';
-        }, 3000);
+    if (newChatBtn) {
+        newChatBtn.addEventListener('click', () => {
+            messages.innerHTML = '';
+            const welcomeDiv = document.createElement('div');
+            welcomeDiv.className = 'welcome-message';
+            welcomeDiv.innerHTML = `
+                <h2>Welcome to IdeaGPT</h2>
+                <p>Your AI-powered idea generator. Click "Generate" to get started!</p>
+            `;
+            messages.appendChild(welcomeDiv);
+        });
     }
-
-    // Keyboard shortcuts
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            if (!generateBtn.disabled) {
-                generateIdea();
-            }
-        }
-    });
 
     // Load history from localStorage
     const savedHistory = localStorage.getItem('ideaHistory');
     if (savedHistory) {
         ideaHistory = JSON.parse(savedHistory);
-        currentIndex = ideaHistory.length - 1;
-        if (currentIndex >= 0) {
-            displayIdea(ideaHistory[currentIndex]);
-        }
+        updateHistory();
     }
-
-    generateBtn.addEventListener('click', generateIdea);
-
-    // Update active navigation link
-    const currentPage = window.location.pathname;
-    document.querySelectorAll('.footer-link').forEach(link => {
-        if (link.getAttribute('href') === currentPage) {
-            link.classList.add('active');
-        }
-    });
 });
