@@ -111,4 +111,52 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize
     updateHistory();
     clearMessages();
+
+    // Add after DOMContentLoaded event listener
+    function addTouchSupport() {
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        messages.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        }, false);
+
+        messages.addEventListener('touchmove', (e) => {
+            touchEndY = e.touches[0].clientY;
+            const scrollTop = messages.scrollTop;
+            const scrollHeight = messages.scrollHeight;
+            const clientHeight = messages.clientHeight;
+
+            // Prevent overscroll
+            if (scrollTop <= 0 && touchEndY > touchStartY) {
+                e.preventDefault();
+            }
+            if (scrollTop + clientHeight >= scrollHeight && touchEndY < touchStartY) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+    }
+
+    // Add to initialization
+    addTouchSupport();
+
+    // Add to your existing DOMContentLoaded event listener
+    document.querySelectorAll('.copy-btn').forEach(button => {
+        button.addEventListener('click', async () => {
+            const email = button.dataset.email;
+            try {
+                await navigator.clipboard.writeText(email);
+                const icon = button.querySelector('i');
+                icon.className = 'fas fa-check';
+                button.classList.add('copy-success');
+                
+                setTimeout(() => {
+                    icon.className = 'fas fa-copy';
+                    button.classList.remove('copy-success');
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+            }
+        });
+    });
 });

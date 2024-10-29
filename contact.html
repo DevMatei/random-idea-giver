@@ -11,6 +11,14 @@
 </head>
 <body>
     <div class="app-container">
+        <nav class="mobile-nav">
+            <div class="mobile-nav-links">
+                <a href="/" class="mobile-nav-link" data-transition><i class="fas fa-home"></i> Home</a>
+                <a href="/about.html" class="mobile-nav-link" data-transition><i class="fas fa-info-circle"></i> About</a>
+                <a href="/contact.html" class="mobile-nav-link" data-transition><i class="fas fa-envelope"></i> Contact</a>
+                <a href="/privacy.html" class="mobile-nav-link" data-transition><i class="fas fa-shield-alt"></i> Privacy</a>
+            </div>
+        </nav>
         <aside class="sidebar">
             <div class="sidebar-header">
                 <img src="media/dark.png" alt="IdeaGPT Logo" class="logo logo-light">
@@ -30,10 +38,10 @@
             </div>
             <div class="sidebar-footer">
                 <nav class="footer-nav">
-                    <a href="/" class="footer-link"><i class="fas fa-home"></i> Home</a>
-                    <a href="/about.html" class="footer-link"><i class="fas fa-info-circle"></i> About</a>
-                    <a href="/contact.html" class="footer-link active"><i class="fas fa-envelope"></i> Contact</a>
-                    <a href="/privacy.html" class="footer-link"><i class="fas fa-shield-alt"></i> Privacy</a>
+                    <a href="/" class="footer-link" data-transition><i class="fas fa-home"></i> Home</a>
+                    <a href="/about.html" class="footer-link" data-transition><i class="fas fa-info-circle"></i> About</a>
+                    <a href="/contact.html" class="footer-link" data-transition><i class="fas fa-envelope"></i> Contact</a>
+                    <a href="/privacy.html" class="footer-link" data-transition><i class="fas fa-shield-alt"></i> Privacy</a>
                 </nav>
             </div>
         </aside>
@@ -48,27 +56,70 @@
                 <h1>Contact Us</h1>
                 <div class="content-section">
                     <h2>Get in Touch</h2>
-                    <p>Have questions or feedback? Reach out to our team through any of these channels:</p>
+                    <p>Have questions, suggestions, or feedback? We'd love to hear from you! Choose your preferred way to connect:</p>
 
-                    <div class="contact-options">
-                        <div class="contact-group">
-                            <h3>Discord</h3>
-                            <a href="https://discord.com/users/784443338627612673" class="contact-link">
-                                <i class="fab fa-discord"></i> Creator
-                            </a>
-                            <a href="https://discord.com/users/1065304440694919178" class="contact-link">
-                                <i class="fab fa-discord"></i> Assistant
-                            </a>
+                    <div class="contact-grid">
+                        <div class="contact-card discord">
+                            <div class="contact-card-header">
+                                <i class="fab fa-discord"></i>
+                                <h3>Discord</h3>
+                            </div>
+                            <div class="contact-links">
+                                <a href="https://discord.com/users/784443338627612673" class="contact-link" target="_blank">
+                                    <span class="contact-role">Creator</span>
+                                    <span class="contact-value">@mateitoma (DevMatei)</span>
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                                <a href="https://discord.com/users/1065304440694919178" class="contact-link" target="_blank">
+                                    <span class="contact-role">Assistant</span>
+                                    <span class="contact-value">@deney.is.stupid (Deney)</span>
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
                         </div>
 
-                        <div class="contact-group">
-                            <h3>Email</h3>
-                            <div class="contact-link">
-                                <i class="fas fa-envelope"></i> Creator: jacobthecrafter@proton.me
+                        <div class="contact-card email">
+                            <div class="contact-card-header">
+                                <i class="fas fa-envelope"></i>
+                                <h3>Email</h3>
                             </div>
-                            <div class="contact-link">
-                                <i class="fas fa-envelope"></i> Assistant: deneyy.lol@gmail.com
+                            <div class="contact-links">
+                                <div class="contact-link">
+                                    <span class="contact-role">Creator</span>
+                                    <span class="contact-value">jacobthecrafter@proton.me</span>
+                                    <button class="copy-btn" data-email="jacobthecrafter@proton.me">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                                <div class="contact-link">
+                                    <span class="contact-role">Assistant</span>
+                                    <span class="contact-value">deneyy.lol@gmail.com</span>
+                                    <button class="copy-btn" data-email="deneyy.lol@gmail.com">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
                             </div>
+                        </div>
+
+                        <div class="contact-card github">
+                            <div class="contact-card-header">
+                                <i class="fab fa-github"></i>
+                                <h3>GitHub</h3>
+                            </div>
+                            <div class="contact-links">
+                                <a href="https://github.com/DevMatei/random-idea-giver" class="contact-link" target="_blank">
+                                    <span class="contact-value">View Project Repository</span>
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="response-info">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3>Response Time</h3>
+                            <p>We typically respond within 24-48 hours during business days.</p>
                         </div>
                     </div>
                 </div>
@@ -76,5 +127,6 @@
         </main>
     </div>
     <script src="assets/script.js"></script>
+    <script src="assets/transitions.js"></script>
 </body>
 </html> 

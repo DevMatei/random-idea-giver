@@ -11,6 +11,14 @@
 </head>
 <body>
     <div class="app-container">
+        <nav class="mobile-nav">
+            <div class="mobile-nav-links">
+                <a href="/" class="mobile-nav-link" data-transition><i class="fas fa-home"></i> Home</a>
+                <a href="/about.html" class="mobile-nav-link" data-transition><i class="fas fa-info-circle"></i> About</a>
+                <a href="/contact.html" class="mobile-nav-link" data-transition><i class="fas fa-envelope"></i> Contact</a>
+                <a href="/privacy.html" class="mobile-nav-link" data-transition><i class="fas fa-shield-alt"></i> Privacy</a>
+            </div>
+        </nav>
         <aside class="sidebar">
             <div class="sidebar-header">
                 <img src="media/dark.png" alt="IdeaGPT Logo" class="logo logo-light">
@@ -30,10 +38,10 @@
             </div>
             <div class="sidebar-footer">
                 <nav class="footer-nav">
-                    <a href="/" class="footer-link"><i class="fas fa-home"></i> Home</a>
-                    <a href="/about.html" class="footer-link"><i class="fas fa-info-circle"></i> About</a>
-                    <a href="/contact.html" class="footer-link"><i class="fas fa-envelope"></i> Contact</a>
-                    <a href="/privacy.html" class="footer-link active"><i class="fas fa-shield-alt"></i> Privacy</a>
+                    <a href="/" class="footer-link" data-transition><i class="fas fa-home"></i> Home</a>
+                    <a href="/about.html" class="footer-link" data-transition><i class="fas fa-info-circle"></i> About</a>
+                    <a href="/contact.html" class="footer-link" data-transition><i class="fas fa-envelope"></i> Contact</a>
+                    <a href="/privacy.html" class="footer-link" data-transition><i class="fas fa-shield-alt"></i> Privacy</a>
                 </nav>
             </div>
         </aside>
@@ -47,25 +55,55 @@
             <div class="page-container">
                 <h1>Privacy Policy</h1>
                 <div class="content-section">
-                    <h2>Data Collection</h2>
-                    <p>We collect minimal data to provide our service. This includes:</p>
-                    <ul>
-                        <li>Generated ideas (stored locally in your browser)</li>
-                        <li>Theme preferences</li>
-                    </ul>
+                    <h2>Our Commitment to Privacy</h2>
+                    <p>At IdeaGPT, we take your privacy seriously. We believe in being transparent about our data practices and ensuring you maintain control over your information.</p>
 
-                    <h2>Data Usage</h2>
-                    <p>Your data is used solely to provide the idea generation service and maintain your history of generated ideas.</p>
+                    <h2>Information We Collect</h2>
+                    <div class="privacy-grid">
+                        <div class="privacy-card">
+                            <i class="fas fa-history"></i>
+                            <h3>Idea History</h3>
+                            <p>Stored locally in your browser using localStorage</p>
+                        </div>
+                        <div class="privacy-card">
+                            <i class="fas fa-moon"></i>
+                            <h3>Preferences</h3>
+                            <p>Theme settings and user preferences</p>
+                        </div>
+                        <div class="privacy-card">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>No Personal Data</h3>
+                            <p>We don't collect or store any personal information</p>
+                        </div>
+                    </div>
 
                     <h2>Data Storage</h2>
-                    <p>All idea history is stored locally in your browser using localStorage. No personal data is sent to our servers.</p>
+                    <ul class="privacy-list">
+                        <li><strong>Local Storage:</strong> All idea history is stored locally in your browser</li>
+                        <li><strong>No Server Storage:</strong> We don't maintain any user data on our servers</li>
+                        <li><strong>Data Control:</strong> You can clear your history at any time</li>
+                    </ul>
 
                     <h2>Third-Party Services</h2>
-                    <p>We use OpenAI's API to generate ideas. Please refer to OpenAI's privacy policy for information about their data handling practices.</p>
+                    <div class="third-party-section">
+                        <div class="service-item">
+                            <h3>OpenAI API</h3>
+                            <p>We use OpenAI's API to generate ideas. Your topic selections are processed according to OpenAI's privacy policy.</p>
+                            <a href="https://openai.com/privacy" target="_blank" rel="noopener noreferrer">View OpenAI's Privacy Policy <i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+
+                    <h2>Updates to Privacy Policy</h2>
+                    <p>We may update this privacy policy from time to time. Any changes will be reflected on this page.</p>
+
+                    <div class="contact-privacy">
+                        <p>If you have any questions about our privacy practices, please contact us through our <a href="/contact.html">Contact page</a>.</p>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
     <script src="assets/script.js"></script>
+    <script src="assets/transitions.js"></script>
 </body>
 </html> 
