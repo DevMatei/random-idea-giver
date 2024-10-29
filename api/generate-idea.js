@@ -12,7 +12,7 @@ export default async function handler(req) {
 
     const { topic = 'any' } = await req.json();
     
-    let prompt = "Generate one random, interesting idea that could be a project, business, or creative endeavor. Keep it concise, about 1-2 sentences. Make it practical and actionable.";
+    let prompt = "Generate one random, interesting idea that could be a project, business, or creative endeavor. Keep it concise, about 1-2 sentences. Make it practical and actionable. Try to make it unique and interesting.";
     
     if (topic !== 'any') {
         prompt += ` The idea should be related to ${topic}.`;
